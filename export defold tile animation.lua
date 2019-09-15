@@ -48,8 +48,6 @@ local function export_footer(f)
 end
 
 local function export(data, sprite)
-
-  app.alert("The given value is '" .. data.game_project .. "'")
   local f = io.open("write.txt", "w")
 
   export_header(f, sprite)
