@@ -48,7 +48,7 @@ local function export_footer(f)
 end
 
 local function export(data, sprite)
-  local f = io.open("write.txt", "w")
+  local f = io.open(data.export_file, "w")
 
   export_header(f, sprite)
   for id, tag in ipairs(sprite.tags) do
