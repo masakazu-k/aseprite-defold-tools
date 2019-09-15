@@ -30,8 +30,8 @@ local function export_animation_tag(f, tag)
 end
 
 --- @param f FILE*
-local function export_header(f, sprite)
-  f:write("image: \"/\"\n")
+local function export_header(f, sprite, image)
+  f:write("image: \""..image.."\"\n")
   f:write("tile_width: "..tostring(sprite.width).."\n")
   f:write("tile_height: "..tostring(sprite.height).."\n")
   f:write("tile_margin: 0\n")
@@ -47,10 +47,23 @@ local function export_footer(f)
   f:write("inner_padding: 0\n")
 end
 
+local function load_image_file(tilesource)
+  local f=io.open(tilesource, "r")
+  local image = ""
+  if f ~= nil then
+    local ls = f:read("l")
+    image = string.match(ls, " ?image ?: ?\"(.*)\"")
+    app.alert(image)
+    f:close(f)
+  end
+  return image
+end
+
 local function export(data, sprite)
+  local image = load_image_file(data.export_file)
   local f = io.open(data.export_file, "w")
 
-  export_header(f, sprite)
+  export_header(f, sprite, image)
   for id, tag in ipairs(sprite.tags) do
     export_animation_tag(f, tag)
   end
